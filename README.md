@@ -50,3 +50,10 @@ Made static product page from mock work as a Vue project:
 - Added `.github/workflows/build-and-deploy.js.yml` to deploy as GitHub Page.
 - Tweaked `vite.config.js` to use correct base URL - otherwise the JS files won't be loaded when hosted as a GitHub page.
 - Added custom favicon
+
+### Iteration 3: Dynamic product loading from local data
+
+- Replaced static product cards with dynamic rendering using Vue's `v-for` from local `products` array in data.js.
+- Products are displayed in a grid.
+- "Details" button shows product description in an alert.
+- Product images, titles, and prices are now populated from array data.
