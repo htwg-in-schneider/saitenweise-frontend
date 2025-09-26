@@ -42,3 +42,11 @@ Made static product page from mock work as a Vue project:
 - Logo and CSS go into assets folder
 - index.html: link CSS and bootstrap JS
 - App.vue: Main content goes here. Logo image link adapted.
+
+### Iteration 2: Dynamic product loading
+
+- Replaced static product cards with dynamic rendering using Vue's `v-for`.
+- Added API call to `http://localhost:8081/api/product` in `App.vue` to fetch products on mount.
+- Products are now loaded from backend and displayed in a grid.
+- "Details" button shows product description in an alert.
+- Product images, titles, and prices are now populated from API data.
