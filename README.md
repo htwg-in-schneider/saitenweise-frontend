@@ -1,34 +1,34 @@
 # saitenweise-frontend
 
-This template should help get you started developing with Vue 3 in Vite.
+Saitenweise is a webshop for string instruments. It sells violins, violas, cellos, double basses, and accessories (strings, bows, rosin). This is the Frontend for the shop.
 
-## Recommended IDE Setup
+## Getting started with Vue.js
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+Information from Vue template:
 
-## Customize configuration
+- **Recommended IDE Setup:**
+  - [VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (disable Vetur)
+- **Customize configuration:**
+  - See [Vite Configuration Reference](https://vite.dev/config/)
+- **Project Setup:** Install dependencies:
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+    ```sh
+    npm install
+    ```
 
-## Project Setup
+- **Development:** Compile and hot-reload:
 
-```sh
-npm install
-```
+    ```sh
+    npm run dev
+    ```
 
-### Compile and Hot-Reload for Development
+- **Production:** Compile and minify:
 
-```sh
-npm run dev
-```
+    ```sh
+    npm run build
+    ```
 
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
-
-## Iterations
+## Iterations (see Git commits)
 
 ### Iteration 0: Getting started
 
