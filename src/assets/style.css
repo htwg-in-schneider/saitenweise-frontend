@@ -1,0 +1,51 @@
+body {
+  font-family: 'Poppins', sans-serif;
+}
+
+.text-accent {
+  color: #ff6600; /* Akzentfarbe */
+}
+
+.btn-accent {
+  background-color: #ff6600;
+  color: white;
+  border-radius: 30px;
+  padding: 0.5rem 1.5rem;
+  transition: 0.3s;
+}
+
+.btn-accent:hover {
+  background-color: #e65c00;
+  color: #fff;
+}
+
+.footer-link {
+  color: #ccc;
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  color: #ff6600;
+}
+
+.image-container {
+  width: 100%; /* oder eine feste Breite */
+  height: 500px; /* Höhe des Containers */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden; /* Verhindert, dass das Bild über den Container hinausragt */
+  background-color: #f8f9fa; /* Optional: Hintergrundfarbe */
+}
+
+.image-container img {
+  object-fit: none; /* Verhindert Skalierung */
+  object-position: center; /* Zentriert das Bild */
+  max-width: none; /* Verhindert automatische Größenanpassung */
+  max-height: none;
+}
+
+#specialbanner {
+  background-color: #ff6600;
+  color: white;
+}
