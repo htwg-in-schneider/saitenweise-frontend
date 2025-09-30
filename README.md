@@ -62,3 +62,8 @@ Made static product page from mock work as a Vue project:
 - Introduced `.env` files to manage environment-specific variable for the API base URL.
 - Updated API calls in `App.vue` to use `import.meta.env.VITE_API_URL` instead of hardcoded URLs.
 - This allows easy switching between development and production backends.
+
+### Iteration 4: GitHub Page deployment
+
+- Added `.github/workflows/build-and-deploy.js.yml` to deploy as GitHub Page.
+- Tweaked `vite.config.js` to use correct base URL - otherwise the JS files won't be loaded when hosted as a GitHub page.
