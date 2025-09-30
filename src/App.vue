@@ -1,13 +1,18 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-const url = 'http://localhost:8081/api/product';
+
+// Import the base URL from environment variables
+const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const products = ref([]);
-onMounted(async () => fetchProducts());
+onMounted(async () => {
+  console.log('API Base URL:', apiBaseUrl);
+  await fetchProducts();
+});
 
 async function fetchProducts() {
   try {
-    const response = await fetch(url);
+    const response = await fetch(apiBaseUrl + '/api/product');
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }

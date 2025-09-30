@@ -28,6 +28,12 @@ Information from Vue template:
     npm run build
     ```
 
+- **Production Preview:** Serve content in dist folder:
+
+    ```sh
+    npm run preview
+    ```
+
 ## Iterations (see Git commits)
 
 ### Iteration 0: Getting started
@@ -50,3 +56,9 @@ Made static product page from mock work as a Vue project:
 - Products are now loaded from backend and displayed in a grid.
 - "Details" button shows product description in an alert.
 - Product images, titles, and prices are now populated from API data.
+
+### Iteration 3: API base URL configuration via `.env` files
+
+- Introduced `.env` files to manage environment-specific variable for the API base URL.
+- Updated API calls in `App.vue` to use `import.meta.env.VITE_API_URL` instead of hardcoded URLs.
+- This allows easy switching between development and production backends.
