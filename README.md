@@ -67,3 +67,21 @@ Made static product page from mock work as a Vue project:
 
 - Added `.github/workflows/build-and-deploy.js.yml` to deploy as GitHub Page.
 - Tweaked `vite.config.js` to use correct base URL - otherwise the JS files won't be loaded when hosted as a GitHub page.
+
+### Iteration 5: Vue Router and CRUD functionality for products
+
+- Integrated `vue-router` to be able to have different views for different operations on products.
+  - Routes are registered in `main.js`.
+    - Important note: When hosting the app not under / on the server (as we are doing with GitHub Pages), `createWebHistory` must be provided with the app path!
+  - Distinguishing between these views takes place in App.vue.
+- Added a `CreateProduct` view to allow users to create new products via a form.
+  - Simple implementation with JS alerts for success/error handling.
+- Added an `EditProduct` view to allow users to edit or delete existing products.
+  - Simple implementation with JS alerts for success/error handling.
+- Integrated API calls for creating, updating, and deleting products:
+  - **Create**: Sends a `POST` request to `/api/product`.
+  - **Update**: Sends a `PUT` request to `/api/product/:id`.
+  - **Delete**: Sends a `DELETE` request to `/api/product/:id`.
+- Updated the `ProductCatalog` view to include:
+  - A "Bearbeiten" button to navigate to the `EditProduct` view.
+  - A "Neues Produkt" button to navigate to the `CreateProduct` view.
