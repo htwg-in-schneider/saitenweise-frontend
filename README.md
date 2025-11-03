@@ -75,3 +75,17 @@ Made static product page from mock work as a Vue project:
 - Created route for the product listing page
 - Updated `App.vue` to include `<router-view>` for rendering routed components.
 - Not quite related: Added favicon
+
+### Iteration 6: CRUD functionality for products
+
+- Added a `CreateProduct` view to allow users to create new products via a form.
+  - Simple implementation with JS alerts for success/error handling.
+- Added an `EditProduct` view to allow users to edit or delete existing products.
+  - Simple implementation with JS alerts for success/error handling.
+- Integrated API calls for creating, updating, and deleting products:
+  - **Create**: Sends a `POST` request to `/api/product`.
+  - **Update**: Sends a `PUT` request to `/api/product/:id`.
+  - **Delete**: Sends a `DELETE` request to `/api/product/:id`.
+- Updated the `ProductCatalog` view to include:
+  - A "Bearbeiten" button to navigate to the `EditProduct` view.
+  - A "Neues Produkt" button to navigate to the `CreateProduct` view.

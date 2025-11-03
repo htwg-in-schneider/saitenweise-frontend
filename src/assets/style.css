@@ -6,6 +6,10 @@ body {
   color: #ff6600; /* Akzentfarbe */
 }
 
+.btn {
+  border-radius: 30px;
+}
+
 .btn-accent {
   background-color: #ff6600;
   color: white;

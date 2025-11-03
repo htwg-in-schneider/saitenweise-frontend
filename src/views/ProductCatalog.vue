@@ -33,6 +33,7 @@ function showAlert(description) {
     <div class="container">
       <h2 class="fw-bold">Produkte</h2>
       <p>Entdecke unsere Auswahl an hochwertigen Produkten für Anfänger und Profis.</p>
+      <router-link to="/create" class="btn btn-accent">Neues Produkt</router-link>
     </div>
   </section>
 
@@ -48,6 +49,9 @@ function showAlert(description) {
             <a class="btn btn-accent mt-auto" @click.prevent="showAlert(product.description)">
               Details
             </a>
+            <router-link :to="`/edit/${product.id}`" class="btn btn-secondary mt-2">
+              Bearbeiten
+            </router-link>
           </div>
         </div>
       </div>
