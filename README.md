@@ -67,3 +67,11 @@ Made static product page from mock work as a Vue project:
 
 - Added `.github/workflows/build-and-deploy.js.yml` to deploy as GitHub Page.
 - Tweaked `vite.config.js` to use correct base URL - otherwise the JS files won't be loaded when hosted as a GitHub page.
+
+### Iteration 5: Added Vue-Router
+
+- Integrated Vue-Router as preparation to adding different views (`router/index.js`)
+  - Important note: When hosting the app not under / on the server (as we are doing with GitHub Pages), `createWebHistory` must be provided with the app path!
+- Created route for the product listing page
+- Updated `App.vue` to include `<router-view>` for rendering routed components.
+- Not quite related: Added favicon
