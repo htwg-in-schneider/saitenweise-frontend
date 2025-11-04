@@ -89,3 +89,11 @@ Made static product page from mock work as a Vue project:
 - Updated the `ProductCatalog` view to include:
   - A "Bearbeiten" button to navigate to the `EditProduct` view.
   - A "Neues Produkt" button to navigate to the `CreateProduct` view.
+
+### Iteration 7: High-Level components
+
+- Vue components have been created inside `src/components`.
+- `ProductCard.vue` is used inside `ProductCatalog.vue` for showing a product summary.
+- `App.vue` is now using `SpecialBanner.vue`, `Navbar.vue`, and `Footer.vue` components for better structure.
+- Styles specific to components have been moved from `style.css` into their respective `<style scoped>` sections.
+- Logic specific to components has been moved into their respective `<script setup>` sections.

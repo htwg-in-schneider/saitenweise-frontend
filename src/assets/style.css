@@ -23,15 +23,6 @@ body {
   color: #fff;
 }
 
-.footer-link {
-  color: #ccc;
-  text-decoration: none;
-}
-
-.footer-link:hover {
-  color: #ff6600;
-}
-
 .image-container {
   width: 100%; /* oder eine feste Breite */
   height: 500px; /* Höhe des Containers */
@@ -47,9 +38,4 @@ body {
   object-position: center; /* Zentriert das Bild */
   max-width: none; /* Verhindert automatische Größenanpassung */
   max-height: none;
-}
-
-#specialbanner {
-  background-color: #ff6600;
-  color: white;
 }
