@@ -97,3 +97,10 @@ Made static product page from mock work as a Vue project:
 - `App.vue` is now using `SpecialBanner.vue`, `Navbar.vue`, and `Footer.vue` components for better structure.
 - Styles specific to components have been moved from `style.css` into their respective `<style scoped>` sections.
 - Logic specific to components has been moved into their respective `<script setup>` sections.
+
+### Iteration 8: Low-Level components
+
+- Introduced some low-level reusable components:
+  - `Button.vue`: A reusable button component with different variants (accent, secondary).
+  - `NavButton.vue`: A button component that integrates with Vue Router for navigation.
+  - `FooterLink.vue`: A link component specifically for footer links (styled appropriately).

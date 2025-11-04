@@ -2,25 +2,17 @@
     <footer class="text-center py-4">
         <p>&copy; 2025 Saitenweise. Alle Rechte vorbehalten.</p>
         <nav>
-            <a href="/kontakt" class="footer-link" aria-label="Kontakt">Kontakt</a>
+            <FooterLink text="Kontakt" label="Kontakt" href="/kontakt" />
             <span aria-hidden="true" style="margin: 0 0.5rem">|</span>
-            <a href="/datenschutz" class="footer-link" aria-label="Datenschutz">Datenschutz</a>
+            <FooterLink text="Datenschutz" label="Datenschutz" href="/datenschutz" />
             <span aria-hidden="true" style="margin: 0 0.5rem">|</span>
-            <a href="/impressum" class="footer-link" aria-label="Impressum">Impressum</a>
+            <FooterLink text="Impressum" label="Impressum" href="/impressum" />
         </nav>
     </footer>
 </template>
 
 <script setup>
+import FooterLink from './FooterLink.vue';
 </script>
 
-<style scoped>
-.footer-link {
-    color: #aaa;
-    text-decoration: none;
-}
-
-.footer-link:hover {
-    color: #ff6600;
-}
-</style>
+<style scoped></style>

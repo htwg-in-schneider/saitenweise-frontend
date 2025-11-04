@@ -1,5 +1,7 @@
 <script setup>
 import { defineProps } from 'vue';
+import Button from './Button.vue';
+import NavButton from './NavButton.vue';
 
 defineProps({
   product: {
@@ -19,12 +21,12 @@ function showAlert(description) {
     <div class="card-body d-flex flex-column">
       <h5 class="card-title">{{ product.title }}</h5>
       <p class="card-text text-accent fw-bold">{{ product.price }} €</p>
-      <a class="btn btn-accent mt-auto" @click.prevent="showAlert(product.description)">
+      <Button variant="accent" class="mt-auto" :onClick="() => showAlert(product.description)">
         Details
-      </a>
-      <router-link :to="`/edit/${product.id}`" class="btn btn-secondary mt-2">
+      </Button>
+      <NavButton :to="`/edit/${product.id}`" variant="secondary" class="mt-2">
         Bearbeiten
-      </router-link>
+      </NavButton>
     </div>
   </div>
 </template>

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import Button from '@/components/Button.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -88,8 +89,8 @@ async function deleteProduct() {
         <label for="productDescription" class="form-label">Beschreibung</label>
         <textarea id="productDescription" class="form-control" v-model="product.description"></textarea>
       </div>
-      <button type="submit" class="btn btn-accent">Aktualisieren</button>
-      <button type="button" class="btn btn-danger ms-2" @click="deleteProduct">Löschen</button>
+      <Button type="submit" variant="accent">Aktualisieren</Button>
+      <Button type="button" variant="danger" class="ms-2" @click="deleteProduct">Löschen</Button>
     </form>
   </div>
 </template>

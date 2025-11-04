@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import Button from '@/components/Button.vue';
 
 const router = useRouter();
 const apiBaseUrl = import.meta.env.VITE_API_BASE_URL;
@@ -45,7 +46,7 @@ async function createProduct() {
         <label for="productDescription" class="form-label">Beschreibung</label>
         <textarea id="productDescription" class="form-control" v-model="product.description"></textarea>
       </div>
-      <button type="submit" class="btn btn-accent">Erstellen</button>
+      <Button type="submit" variant="accent">Erstellen</Button>
     </form>
   </div>
 </template>
