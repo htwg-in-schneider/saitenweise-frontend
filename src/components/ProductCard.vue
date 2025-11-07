@@ -1,4 +1,6 @@
 <script setup>
+import Button from '@/components/Button.vue';
+
 defineProps({
   product: {
     type: Object,
@@ -17,9 +19,9 @@ function showAlert(description) {
     <div class="card-body d-flex flex-column">
       <h5 class="card-title">{{ product.title }}</h5>
       <p class="card-text text-accent fw-bold">{{ product.price }} €</p>
-      <a class="btn btn-accent mt-auto" @click.prevent="showAlert(product.description)">
+      <Button variant="accent" class="mt-auto" :onClick="() => showAlert(product.description)">
         Details
-      </a>
+      </Button>
     </div>
   </div>
 </template>
