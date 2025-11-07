@@ -6,6 +6,22 @@ body {
   color: #ff6600; /* Akzentfarbe */
 }
 
+.btn {
+  border-radius: 30px;
+  padding: 0.5rem 1.5rem;
+  transition: 0.3s;
+}
+
+.btn-accent {
+  background-color: #ff6600;
+  color: white;
+}
+
+.btn-accent:hover {
+  background-color: #e65c00;
+  color: #fff;
+}
+
 .image-container {
   width: 100%; /* oder eine feste Breite */
   height: 500px; /* Höhe des Containers */
