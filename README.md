@@ -57,3 +57,11 @@ Made static product page from mock work as a Vue project:
 - Products are displayed in a grid.
 - "Details" button shows product description in an alert.
 - Product images, titles, and prices are now populated from array data.
+
+### Iteration 4: High-Level components
+
+- Vue components have been created inside `src/components`.
+- `ProductCard.vue` is used inside `App.vue` for showing a product summary.
+- `App.vue` is now using `SpecialBanner.vue`, `Navbar.vue`, and `Footer.vue` components for better structure.
+- Styles specific to components have been moved from `style.css` into their respective `<style scoped>` sections.
+- Logic specific to components has been moved into their respective `<script setup>` sections.
