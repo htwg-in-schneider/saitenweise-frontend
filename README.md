@@ -71,3 +71,12 @@ Made static product page from mock work as a Vue project:
 - Introduced some low-level reusable components:
   - `Button.vue`: A reusable button component with different variants (accent, secondary).
   - `FooterLink.vue`: A link component specifically for footer links (styled appropriately).
+
+### Iteration 6: Added Vue-Router and product detail view
+
+- Integrated Vue-Router as preparation to adding different views (`router/index.js`)
+  - Important note: When hosting the app not under / on the server (as we are doing with GitHub Pages), `createWebHistory` must be provided with the app path!
+  - also `main.js` must be imported relatively
+- Updated `App.vue` to include `<router-view>` for rendering routed components.
+- Created route `/` to `ProductCatalog.vue` for the product listing page
+- Added a new product detail view that is linked from `ProductCard.vue` and can be accessed via `/product/:id`.
