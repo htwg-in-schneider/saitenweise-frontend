@@ -1,6 +1,6 @@
 <script setup>
 import placeholderImage from '@/assets/placeholder.jpg'; // Importieren des Bildes
-import Button from '@/components/Button.vue';
+import NavButton from '@/components/NavButton.vue';
 
 defineProps({
   product: {
@@ -16,12 +16,9 @@ defineProps({
     <div class="card-body d-flex flex-column">
       <h5 class="card-title">{{ product.title }}</h5>
       <p class="card-text text-accent fw-bold">{{ product.price }} €</p>
-      <Button variant="accent" class="mt-auto" :onClick="() => showAlert(product.description)">
+      <NavButton variant="accent" class="mt-auto" :to="`/product/${product.id}`">
         Details
-      </Button>
+      </NavButton>
     </div>
   </div>
 </template>
-
-<style scoped>
-</style>
