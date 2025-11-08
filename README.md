@@ -80,3 +80,12 @@ Made static product page from mock work as a Vue project:
 - Updated `App.vue` to include `<router-view>` for rendering routed components.
 - Created route `/` to `ProductCatalog.vue` for the product listing page
 - Added a new product detail view that is linked from `ProductCard.vue` and can be accessed via `/product/:id`.
+
+### Iteration 7: State management with Pinia
+
+- Integrated Pinia for simple global state (banner visibility is saved through different views) and updated the banner component to use the store:
+  - Installed Pinia: `npm install pinia`.
+  - Added a small store: `src/stores/banner.js` (defines `isVisible` and `hideBanner()`).
+  - Registered Pinia in `src/main.js` with `createPinia()` and `app.use(pinia)`.
+  - Updated `SpecialBanner.vue` to use `useBannerStore()` and call `hideBanner` on button click.
+- Note: For persistence across reloads you can extend the store to sync with `localStorage` or use a pinia plugin, see e.g. 
