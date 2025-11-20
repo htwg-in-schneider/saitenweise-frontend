@@ -4,15 +4,35 @@ import Navbar from '@/components/Navbar.vue';
 import SpecialBanner from '@/components/SpecialBanner.vue';
 import NavButton from '@/components/NavButton.vue';
 import Button from '@/components/Button.vue';
-import { computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import { products } from '@/data.js';
 
+const url = 'https://dummyjson.com/products';
 const route = useRoute();
+const product = ref(null);
+onMounted(async () => fetchProduct());
 
-const product = computed(() => {
-    return products.find(p => String(p.id) === String(route.params.id)) || null;
-});
+async function fetchProduct() {
+  try {
+    const response = await fetch(`${url}/${route.params.id}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    const dummyproducts = await response.json();
+    // dummy products structure must be adapted to our product structure,
+    // see ProductCatalog.vue for details
+    product.value = {
+        id: dummyproducts.id,
+        title: dummyproducts.title,
+        description: dummyproducts.description,
+        price: dummyproducts.price,
+        imageUrl: dummyproducts.thumbnail
+    };
+    console.log(product.value);
+  } catch (error) {
+    console.error('Error fetching product:', error);
+  }
+}
 </script>
 
 <template>
