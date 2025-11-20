@@ -96,3 +96,8 @@ Made static product page from mock work as a Vue project:
 - Replaced static product data with data from <https://dummyjson.com/products>
 - Adapted `ProductCard.vue` and `ProductDetail.vue` accordingly.
 - Only very basic error handling is implemented.
+
+### Iteration 8b: Dynamic product loading via REST backend (real data)
+
+- Replaced static product data with data from our REST backend
+- Adapted `ProductCard.vue` and `ProductDetail.vue` accordingly.

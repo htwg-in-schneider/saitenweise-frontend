@@ -4,7 +4,7 @@ import Navbar from '@/components/Navbar.vue';
 import SpecialBanner from '@/components/SpecialBanner.vue';
 import ProductCard from '@/components/ProductCard.vue';
 import { ref, onMounted } from 'vue';
-const url = 'https://dummyjson.com/products';
+const url = 'http://localhost:8081/api/product';
 
 const products = ref([]);
 onMounted(async () => fetchProducts());
@@ -15,36 +15,7 @@ async function fetchProducts() {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const dummyproducts = await response.json();
-    // dummy products structure is
-    //{
-    //  "products": [
-    //    {
-    //      "id": 1,
-    //      "title": "Essence Mascara Lash Princess",
-    //      "description": "The best mascara for beautiful lashes",
-    //      "price": 9.99,
-    //      "thumbnail": "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp"
-    //    }, ... 
-    //   ]
-    // }
-    // which must be adapted to our product structure
-    // {
-    //   id: 1,
-    //   title: "Geige Modell 1234",
-    //   description:
-    //       "Eine hochwertige Geige, welche schon alle Konzerthäuser dieser Welt gesehen hat.",
-    //   category: "VIOLIN",
-    //   price: 1234.0,
-    //   imageUrl: "https://neshanjo.github.io/saitenweise-images/violin_pro.jpg",
-    // },
-    products.value = dummyproducts.products.map(dummyproduct => ({
-      id: dummyproduct.id,
-      title: dummyproduct.title,
-      description: dummyproduct.description,
-      price: dummyproduct.price,
-      imageUrl: dummyproduct.thumbnail
-    }));
+    products.value = await response.json();
     console.log(products.value);
   } catch (error) {
     console.error('Error fetching products:', error);
