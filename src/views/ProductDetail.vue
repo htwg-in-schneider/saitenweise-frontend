@@ -4,8 +4,9 @@ import Navbar from '@/components/Navbar.vue';
 import SpecialBanner from '@/components/SpecialBanner.vue';
 import NavButton from '@/components/NavButton.vue';
 import Button from '@/components/Button.vue';
-import { computed } from 'vue';
-import { products } from '@/data.js';
+import { ref, onMounted } from 'vue';
+
+const url = 'http://localhost:8081/api/product';
 
 const props = defineProps({
     id: {
@@ -14,9 +15,21 @@ const props = defineProps({
     }
 });
 
-const product = computed(() => {
-    return products.find(p => String(p.id) === String(props.id)) || null;
-});
+const product = ref(null);
+onMounted(async () => fetchProduct());
+
+async function fetchProduct() {
+  try {
+    const response = await fetch(`${url}/${props.id}`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    product.value = await response.json();
+    console.log(product.value);
+  } catch (error) {
+    console.error('Error fetching product:', error);
+  }
+}
 </script>
 
 <template>

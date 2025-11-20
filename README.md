@@ -88,4 +88,10 @@ Made static product page from mock work as a Vue project:
   - Added a small store: `src/stores/banner.js` (defines `isVisible` and `hideBanner()`).
   - Registered Pinia in `src/main.js` with `createPinia()` and `app.use(pinia)`.
   - Updated `SpecialBanner.vue` to use `useBannerStore()` and call `hideBanner` on button click.
-- Note: For persistence across reloads you can extend the store to sync with `localStorage` or use a pinia plugin, see e.g. 
+- Note: For persistence across reloads you can extend the store to sync with `localStorage` or use a pinia plugin.
+
+### Iteration 8: Dynamic product loading via REST
+
+- Replaced static product data with data from REST endpoints.
+- Adapted `ProductCard.vue` and `ProductDetail.vue` accordingly.
+- Only very basic error handling is implemented.

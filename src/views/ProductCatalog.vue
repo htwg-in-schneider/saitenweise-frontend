@@ -3,11 +3,23 @@ import Footer from '@/components/Footer.vue';
 import Navbar from '@/components/Navbar.vue';
 import SpecialBanner from '@/components/SpecialBanner.vue';
 import ProductCard from '@/components/ProductCard.vue';
+import { ref, onMounted } from 'vue';
+const url = 'http://localhost:8081/api/product';
 
-import { products } from '@/data.js';
+const products = ref([]);
+onMounted(async () => fetchProducts());
 
-function getProducts() {
-  return products;
+async function fetchProducts() {
+  try {
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    products.value = await response.json();
+    console.log(products.value);
+  } catch (error) {
+    console.error('Error fetching products:', error);
+  }
 }
 </script>
 
@@ -26,7 +38,7 @@ function getProducts() {
   <!-- Product Grid -->
   <div class="container py-4">
     <div class="row g-4">
-      <div v-for="product in getProducts()" :key="product.id" class="col-md-4">
+      <div v-for="product in products" :key="product.id" class="col-md-4">
         <ProductCard :product="product" />
       </div>
     </div>
