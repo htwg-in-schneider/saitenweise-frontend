@@ -16,8 +16,11 @@ defineProps({
     <div class="card-body d-flex flex-column">
       <h5 class="card-title">{{ product.title }}</h5>
       <p class="card-text text-accent fw-bold">{{ product.price }} €</p>
-      <NavButton variant="accent" class="mt-auto" :to="`/product/${product.id}`">
+      <NavButton variant="accent" class="mt-auto" :to="`/product/view/${product.id}`">
         Details
+      </NavButton>
+      <NavButton variant="secondary" class="mt-auto" :to="`/product/edit/${product.id}`">
+        Bearbeiten
       </NavButton>
     </div>
   </div>

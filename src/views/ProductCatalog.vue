@@ -1,6 +1,7 @@
 <script setup>
 import Footer from '@/components/Footer.vue';
 import Navbar from '@/components/Navbar.vue';
+import NavButton from '@/components/NavButton.vue';
 import SpecialBanner from '@/components/SpecialBanner.vue';
 import ProductCard from '@/components/ProductCard.vue';
 import { ref, onMounted } from 'vue';
@@ -32,6 +33,7 @@ async function fetchProducts() {
     <div class="container">
       <h2 class="fw-bold">Produkte</h2>
       <p>Entdecke unsere Auswahl an hochwertigen Produkten für Anfänger und Profis.</p>
+      <NavButton to="/product/create">Neues Produkt</NavButton>
     </div>
   </section>
 

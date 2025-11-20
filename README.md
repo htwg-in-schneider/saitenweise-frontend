@@ -101,3 +101,18 @@ Made static product page from mock work as a Vue project:
 
 - Replaced static product data with data from our REST backend
 - Adapted `ProductCard.vue` and `ProductDetail.vue` accordingly.
+
+### Iteration 9: Complete CRUD of products via REST
+
+- Added a `CreateProduct` view to allow users to create new products via a form.
+  - Loading categories and translations via REST endpoint
+  - Simple implementation with JS alerts for success/error handling.
+- Added an `EditProduct` view to allow users to edit or delete existing products.
+  - Loading categories and translations via REST endpoint
+  - Simple implementation with JS alerts for success/error handling.
+- Integrated API calls for creating, updating, and deleting products:
+  - **Create**: Sends a `POST` request to `/api/product`.
+  - **Update**: Sends a `PUT` request to `/api/product/:id`.
+  - **Delete**: Sends a `DELETE` request to `/api/product/:id`.
+- Updated the `ProductCatalog` view to include a "Neues Produkt" button to navigate to the `CreateProduct` view.
+- Updated the `ProductCard` component to include a "Bearbeiten" button to navigate to the `EditProduct` view.
