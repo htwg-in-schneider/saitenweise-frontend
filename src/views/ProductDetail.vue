@@ -6,8 +6,7 @@ import NavButton from '@/components/NavButton.vue';
 import Button from '@/components/Button.vue';
 import { ref, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-
-const url = 'https://dummyjson.com/products';
+const url = 'http://localhost:8081/api/product';
 const route = useRoute();
 const product = ref(null);
 onMounted(async () => fetchProduct());
@@ -18,16 +17,7 @@ async function fetchProduct() {
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    const dummyproducts = await response.json();
-    // dummy products structure must be adapted to our product structure,
-    // see ProductCatalog.vue for details
-    product.value = {
-        id: dummyproducts.id,
-        title: dummyproducts.title,
-        description: dummyproducts.description,
-        price: dummyproducts.price,
-        imageUrl: dummyproducts.thumbnail
-    };
+    product.value = await response.json();
     console.log(product.value);
   } catch (error) {
     console.error('Error fetching product:', error);
