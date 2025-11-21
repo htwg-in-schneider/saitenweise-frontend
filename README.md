@@ -108,3 +108,12 @@ Made static product page from mock work as a Vue project:
   - **Delete**: Sends a `DELETE` request to `/api/product/:id`.
 - Updated the `ProductCatalog` view to include a "Neues Produkt" button to navigate to the `CreateProduct` view.
 - Updated the `ProductCard` component to include a "Bearbeiten" button to navigate to the `EditProduct` view.
+
+### Iteration 10: Product Search and Filter
+
+- Added `ProductFilter.vue` component for filtering products by name and category.
+  - Fetches available categories and their translations from the backend (`/api/category`).
+  - Emits search parameters to the parent component.
+- Updated `ProductCatalog.vue` to handle search and filter events.
+  - `fetchProducts` now accepts filter parameters and appends them to the API request (`/api/product?name=...&category=...`).
+- Also updated dependencies in `package.json`
