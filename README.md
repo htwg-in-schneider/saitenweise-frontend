@@ -132,3 +132,11 @@ Made static product page from mock work as a Vue project:
 - Links now include the `category` as a route query parameter (e.g. `/?category=VIOLIN`).
 - Adapted `ProductCatalog.vue` to read the `category` query parameter using `vue-router`'s `useRoute`.
 - Added a `watch` on `route.query.category` to re-fetch products automatically when the navigation changes the category.
+
+### Iteration 11: Product Reviews (1:n)
+
+- Integrated product reviews into the frontend
+  - Product - Review is a 1:n relationship 
+- Added `ProductReviews.vue` component to fetch and display reviews for a specific product.
+  - Creation and deletion of reviews is currently not supported.
+- Updated `ProductDetail.vue` to include the `ProductReviews` component.
