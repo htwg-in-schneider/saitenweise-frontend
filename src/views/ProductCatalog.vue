@@ -7,7 +7,7 @@ import ProductCard from '@/components/ProductCard.vue';
 import ProductFilter from '@/components/ProductFilter.vue';
 import { ref, onMounted } from 'vue';
 
-const url = 'http://localhost:8081/api/product';
+const url = `${import.meta.env.VITE_API_BASE_URL}/api/product`;
 
 const products = ref([]);
 

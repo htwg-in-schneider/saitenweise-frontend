@@ -5,7 +5,7 @@ import Button from '@/components/Button.vue';
 
 const route = useRoute();
 const router = useRouter();
-const url = 'http://localhost:8081/api/product';
+const url = `${import.meta.env.VITE_API_BASE_URL}/api/product`;
 const product = ref({});
 
 onMounted(async () => {

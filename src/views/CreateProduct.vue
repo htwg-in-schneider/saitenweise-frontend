@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 import Button from '@/components/Button.vue';
 
 const router = useRouter();
-const url = 'http://localhost:8081/api/product';
+const url = `${import.meta.env.VITE_API_BASE_URL}/api/product`;
 const product = ref({ title: '', price: 0, imageUrl: '', description: '' });
 
 async function createProduct() {
