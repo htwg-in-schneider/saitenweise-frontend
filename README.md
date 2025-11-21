@@ -117,3 +117,11 @@ Made static product page from mock work as a Vue project:
 - Updated `ProductCatalog.vue` to handle search and filter events.
   - `fetchProducts` now accepts filter parameters and appends them to the API request (`/api/product?name=...&category=...`).
 - Also updated dependencies in `package.json`
+
+### Iteration 11: Product Reviews (1:n)
+
+- Integrated product reviews into the frontend
+  - Product - Review is a 1:n relationship 
+- Added `ProductReviews.vue` component to fetch and display reviews for a specific product.
+  - Creation and deletion of reviews is currently not supported.
+- Updated `ProductDetail.vue` to include the `ProductReviews` component.

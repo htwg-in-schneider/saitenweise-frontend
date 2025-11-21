@@ -2,6 +2,7 @@
 import Footer from '@/components/Footer.vue';
 import Navbar from '@/components/Navbar.vue';
 import SpecialBanner from '@/components/SpecialBanner.vue';
+import ProductReviews from '@/components/ProductReviews.vue';
 import NavButton from '@/components/NavButton.vue';
 import Button from '@/components/Button.vue';
 import { ref, onMounted } from 'vue';
@@ -47,6 +48,7 @@ async function fetchProduct() {
                 <p>{{ product.description }}</p>
                 <NavButton variant="secondary" class="me-2" to="/">Zurück</NavButton>
                 <Button variant="accent">In den Warenkorb</Button>
+                <ProductReviews :productId="id" />
             </div>
         </div>
         <div v-else class="text-center">
