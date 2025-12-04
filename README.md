@@ -156,3 +156,11 @@ Made static product page from mock work as a Vue project:
 - calling `/api/backend` to retrieve backend user and role
 - Note that the corresponding user entities in the backend must exist to make this work
   - see `DataLoader.java` in backend and adapt the oauthIds accordingly.
+
+### Iteration 14: Secure product API calls and role-based UI
+
+- Updated API calls (Create, Update, Delete) to include the Bearer token in the Authorization header.
+- Implemented role-based UI in `ProductCatalog`:
+  - Checks if the user has the ADMIN role via `/api/profile`.
+  - Only displays "Neues Produkt" and "Bearbeiten" buttons for admins.
+- Protected routes for creating and editing products using Auth0's `authGuard`.

@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router';
+import { authGuard } from '@auth0/auth0-vue'
 import ProductCatalog from '@/views/ProductCatalog.vue';
 import ProductDetail from '@/views/ProductDetail.vue';
 import CreateProduct from '@/views/CreateProduct.vue';
@@ -13,9 +14,21 @@ const routes = [
     component: ProductDetail,
     props: true
   },
-  { path: '/product/create', component: CreateProduct },
-  { path: '/product/edit/:id', component: EditProduct },
-  { path: '/profile', component: Profile },
+  {
+    path: '/product/create',
+    component: CreateProduct,
+    beforeEnter: authGuard
+  },
+  {
+    path: '/product/edit/:id',
+    component: EditProduct,
+    beforeEnter: authGuard
+  },
+  {
+    path: '/profile',
+    component: Profile,
+    beforeEnter: authGuard
+  },
 ];
 
 const router = createRouter({

@@ -1,17 +1,24 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import { useAuth0 } from '@auth0/auth0-vue';
 import Button from '@/components/Button.vue';
+import NavButton from '@/components/NavButton.vue';
 
 const router = useRouter();
+const { getAccessTokenSilently } = useAuth0();
 const url = `${import.meta.env.VITE_API_BASE_URL}/api/product`;
 const product = ref({ title: '', price: 0, imageUrl: '', description: '' });
 
 async function createProduct() {
   try {
+    const token = await getAccessTokenSilently();
     const response = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
       body: JSON.stringify(product.value),
     });
     if (!response.ok) {
@@ -46,6 +53,7 @@ async function createProduct() {
         <label for="productDescription" class="form-label">Beschreibung</label>
         <textarea id="productDescription" class="form-control" v-model="product.description"></textarea>
       </div>
+      <NavButton variant="secondary" class="me-2" to="/">Zurück</NavButton>
       <Button type="submit" variant="accent">Erstellen</Button>
     </form>
   </div>

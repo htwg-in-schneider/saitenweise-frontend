@@ -5,7 +5,11 @@ import NavButton from '@/components/NavButton.vue';
 import SpecialBanner from '@/components/SpecialBanner.vue';
 import ProductCard from '@/components/ProductCard.vue';
 import ProductFilter from '@/components/ProductFilter.vue';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
+import { useAuth0 } from '@auth0/auth0-vue';
+
+const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+const isAdmin = ref(false);
 
 const url = `${import.meta.env.VITE_API_BASE_URL}/api/product`;
 
@@ -13,7 +17,31 @@ const products = ref([]);
 
 onMounted(async () => {
   fetchProducts();
+  if (isAuthenticated.value) {
+    checkAdminRole();
+  }
 });
+
+watch(isAuthenticated, (newValue) => {
+  if (newValue) {
+    checkAdminRole();
+  }
+});
+
+async function checkAdminRole() {
+  try {
+    const token = await getAccessTokenSilently();
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/profile`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (response.ok) {
+      const data = await response.json();
+      isAdmin.value = data.role === 'ADMIN';
+    }
+  } catch (error) {
+    console.error('Error checking admin role:', error);
+  }
+}
 
 async function fetchProducts(filters = {}) {
   try {
@@ -56,7 +84,7 @@ async function fetchProducts(filters = {}) {
   <div class="container py-4">
     <div class="row g-4">
       <div v-for="product in products" :key="product.id" class="col-md-4">
-        <ProductCard :product="product" />
+        <ProductCard :product="product" :show-edit-button="isAdmin" />
       </div>
     </div>
   </div>
@@ -64,7 +92,7 @@ async function fetchProducts(filters = {}) {
   <div class="container py-4">
     <div class="row g-4 text-center">
       <div class="col-md-4"></div>
-      <div class="col-md-4">
+      <div class="col-md-4" v-if="isAdmin">
         <NavButton to="/product/create">Neues Produkt</NavButton>
       </div>
       <div class="col-md-4"></div>

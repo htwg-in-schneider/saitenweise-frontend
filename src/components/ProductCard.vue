@@ -5,7 +5,11 @@ defineProps({
   product: {
     type: Object,
     required: true,
-  }
+  },
+  showEditButton: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 function showAlert(description) {
@@ -22,7 +26,7 @@ function showAlert(description) {
       <NavButton variant="accent" class="mt-auto" :to="`/product/view/${product.id}`">
         Details
       </NavButton>
-      <NavButton variant="secondary" class="mt-auto" :to="`/product/edit/${product.id}`">
+      <NavButton v-if="showEditButton" variant="secondary" class="mt-auto" :to="`/product/edit/${product.id}`">
         Bearbeiten
       </NavButton>
     </div>
