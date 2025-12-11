@@ -1,5 +1,6 @@
 <script setup>
 import NavButton from '@/components/NavButton.vue';
+import placeholderImage from '@/assets/placeholder.jpg'; // Importieren des Bildes
 
 defineProps({
   product: {
@@ -11,15 +12,11 @@ defineProps({
     default: false,
   },
 });
-
-function showAlert(description) {
-  alert(description);
-}
 </script>
 
 <template>
   <div class="card h-100 shadow-sm">
-    <img :src="product.imageUrl" class="card-img-top" alt="Produktbild">
+    <img :src="product.imageUrl ? product.imageUrl : placeholderImage" class="card-img-top" alt="Produktbild">
     <div class="card-body d-flex flex-column">
       <h5 class="card-title">{{ product.title }}</h5>
       <p class="card-text text-accent fw-bold">{{ product.price }} €</p>
