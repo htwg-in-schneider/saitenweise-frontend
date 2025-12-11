@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import Button from '@/components/Button.vue';
@@ -8,14 +8,23 @@ import NavButton from '@/components/NavButton.vue';
 const router = useRouter();
 const { getAccessTokenSilently } = useAuth0();
 const url = `${import.meta.env.VITE_API_BASE_URL}/api/product`;
-const product = ref({ title: '', price: 0, imageUrl: '', description: '' });
+const categoryUrl = `${import.meta.env.VITE_API_BASE_URL}/api/category`;
+const product = ref({
+  title: '',
+  price: 0,
+  imageUrl: '',
+  description: '',
+  category: '',
+});
+const categories = ref([]);
+const translations = ref({});
 
 async function createProduct() {
   try {
     const token = await getAccessTokenSilently();
     const response = await fetch(url, {
       method: 'POST',
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
       },
@@ -31,6 +40,32 @@ async function createProduct() {
     alert('Produkt konnte nicht erstellt werden.');
   }
 }
+
+onMounted(async () => {
+  await Promise.all([fetchCategories(), fetchTranslations()]);
+});
+
+async function fetchCategories() {
+  try {
+    const response = await fetch(categoryUrl);
+    if (response.ok) {
+      categories.value = await response.json();
+    }
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+  }
+}
+
+async function fetchTranslations() {
+  try {
+    const response = await fetch(`${categoryUrl}/translation`);
+    if (response.ok) {
+      translations.value = await response.json();
+    }
+  } catch (error) {
+    console.error('Error fetching translations:', error);
+  }
+}
 </script>
 
 <template>
@@ -40,6 +75,15 @@ async function createProduct() {
       <div class="mb-3">
         <label for="productName" class="form-label">Name</label>
         <input type="text" id="productName" class="form-control" v-model="product.title" />
+      </div>
+      <div class="mb-3">
+        <label for="productCategory" class="form-label">Kategorie</label>
+        <select id="productCategory" class="form-select" v-model="product.category">
+          <option value="">Bitte wählen</option>
+          <option v-for="category in categories" :key="category" :value="category">
+            {{ translations[category] || category }}
+          </option>
+        </select>
       </div>
       <div class="mb-3">
         <label for="productPrice" class="form-label">Preis</label>
