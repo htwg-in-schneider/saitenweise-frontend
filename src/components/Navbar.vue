@@ -18,11 +18,24 @@ import UserMenu from './UserMenu.vue'
 
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-4">
-          <li class="nav-item"><a class="nav-link active" href="#">Geigen</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Bratschen</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Celli</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Kontrabässe</a></li>
-          <li class="nav-item"><a class="nav-link" href="#">Zubehör</a></li>
+           <li class="nav-item">
+            <router-link class="nav-link active" :to="{ path: '/'}">Alle</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" :to="{ path: '/', query: { category: 'VIOLIN' } }">Geigen</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" :to="{ path: '/', query: { category: 'VIOLA' } }">Bratschen</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" :to="{ path: '/', query: { category: 'CELLO' } }">Celli</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" :to="{ path: '/', query: { category: 'DOUBLE_BASS' } }">Kontrabässe</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link class="nav-link" :to="{ path: '/', query: { category: 'ACCESSORIES' } }">Zubehör</router-link>
+          </li>
         </ul>
       </div>
     </div>

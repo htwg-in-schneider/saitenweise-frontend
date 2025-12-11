@@ -7,19 +7,25 @@ import ProductCard from '@/components/ProductCard.vue';
 import ProductFilter from '@/components/ProductFilter.vue';
 import { ref, onMounted, watch } from 'vue';
 import { useAuth0 } from '@auth0/auth0-vue';
+import { useRoute } from 'vue-router';
 
 const { isAuthenticated, getAccessTokenSilently } = useAuth0();
 const isAdmin = ref(false);
 
 const url = `${import.meta.env.VITE_API_BASE_URL}/api/product`;
 
+const route = useRoute();
 const products = ref([]);
 
 onMounted(async () => {
-  fetchProducts();
+  fetchProducts({ category: route.query.category });
   if (isAuthenticated.value) {
     checkAdminRole();
   }
+});
+
+watch(() => route.query.category, (newCategory) => {
+  fetchProducts({ category: newCategory });
 });
 
 watch(isAuthenticated, (newValue) => {
