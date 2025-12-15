@@ -164,3 +164,21 @@ Made static product page from mock work as a Vue project:
   - Checks if the user has the ADMIN role via `/api/profile`.
   - Only displays "Neues Produkt" and "Bearbeiten" buttons for admins.
 - Protected routes for creating and editing products using Auth0's `authGuard`.
+
+### Some smaller changes as individual commits
+
+- added category editing
+- made navbar links work
+- added auth0 config to production
+
+### Iteration 15: Transaction over multiple views: Checkout
+
+- **Shopping Cart**: Implemented a global shopping cart state using Pinia.
+  - Cart persists across page reloads and redirects (e.g., Auth0 login) using `localStorage`.
+  - Added "Add to Cart" functionality on Product Detail pages.
+  - Added a cart icon with an item badge to the Navbar.
+- **Checkout Process**:
+  - Created a dedicated `CheckoutView` to review items and enter shipping details.
+  - Implemented order submission logic, sending the cart payload to the backend.
+  - **Very basic implementation**, no payment, no form validation, no confirmation page.
+

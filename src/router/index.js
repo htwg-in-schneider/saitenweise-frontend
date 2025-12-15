@@ -5,6 +5,7 @@ import ProductDetail from '@/views/ProductDetail.vue';
 import CreateProduct from '@/views/CreateProduct.vue';
 import EditProduct from '@/views/EditProduct.vue';
 import Profile from '@/views/Profile.vue';
+import CheckoutView from '@/views/CheckoutView.vue';
 
 const routes = [
   { path: '/', component: ProductCatalog },
@@ -29,6 +30,11 @@ const routes = [
     component: Profile,
     beforeEnter: authGuard
   },
+  {
+    path: '/checkout',
+    component: CheckoutView,
+    beforeEnter: authGuard
+  }
 ];
 
 const router = createRouter({
