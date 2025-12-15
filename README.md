@@ -179,3 +179,14 @@ Made static product page from mock work as a Vue project:
 - Introduced `.env.development` and `.env.production` files to manage environment-specific variable for the API base URL.
 - Updated API calls to use `import.meta.env.VITE_API_URL` instead of hardcoded URLs, see e.g. `ProductDetail.vue`
 - This allows easy switching between development (local) and production backends.
+
+### Iteration 15: Transaction over multiple views: Checkout
+
+- **Shopping Cart**: Implemented a global shopping cart state using Pinia.
+  - Cart persists across page reloads and redirects (e.g., Auth0 login) using `localStorage`.
+  - Added "Add to Cart" functionality on Product Detail pages.
+  - Added a cart icon with an item badge to the Navbar.
+- **Checkout Process**:
+  - Created a dedicated `CheckoutView` to review items and enter shipping details.
+  - Implemented order submission logic, sending the cart payload to the backend.
+  - **Very basic implementation**, no payment, no form validation, no confirmation page.

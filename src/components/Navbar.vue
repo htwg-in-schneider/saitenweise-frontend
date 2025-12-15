@@ -1,5 +1,8 @@
 <script setup>
 import UserMenu from './UserMenu.vue'
+import { useCartStore } from '@/stores/cart'
+
+const cartStore = useCartStore()
 </script>
 
 <template>
@@ -10,6 +13,13 @@ import UserMenu from './UserMenu.vue'
       </router-link>
 
       <div class="d-flex align-items-center order-lg-last">
+        <router-link class="position-relative me-3 text-dark" to="/checkout" aria-label="Warenkorb">
+          <i class="bi bi-cart3 fs-4"></i>
+          <span v-if="cartStore.itemCount > 0"
+            class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-accent">
+            {{ cartStore.itemCount }}
+          </span>
+        </router-link>
         <UserMenu class="me-2 me-lg-0" />
         <button class="navbar-toggler ms-2" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
           <span class="navbar-toggler-icon"></span>
@@ -18,8 +28,8 @@ import UserMenu from './UserMenu.vue'
 
       <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-4">
-           <li class="nav-item">
-            <router-link class="nav-link active" :to="{ path: '/'}">Alle</router-link>
+          <li class="nav-item">
+            <router-link class="nav-link active" :to="{ path: '/' }">Alle</router-link>
           </li>
           <li class="nav-item">
             <router-link class="nav-link" :to="{ path: '/', query: { category: 'VIOLIN' } }">Geigen</router-link>
@@ -31,7 +41,8 @@ import UserMenu from './UserMenu.vue'
             <router-link class="nav-link" :to="{ path: '/', query: { category: 'CELLO' } }">Celli</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" :to="{ path: '/', query: { category: 'DOUBLE_BASS' } }">Kontrabässe</router-link>
+            <router-link class="nav-link"
+              :to="{ path: '/', query: { category: 'DOUBLE_BASS' } }">Kontrabässe</router-link>
           </li>
           <li class="nav-item">
             <router-link class="nav-link" :to="{ path: '/', query: { category: 'ACCESSORIES' } }">Zubehör</router-link>
@@ -42,6 +53,4 @@ import UserMenu from './UserMenu.vue'
   </nav>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>
