@@ -5,14 +5,20 @@ import NavButton from '@/components/NavButton.vue';
 import SpecialBanner from '@/components/SpecialBanner.vue';
 import ProductCard from '@/components/ProductCard.vue';
 import ProductFilter from '@/components/ProductFilter.vue';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch } from 'vue';
+import { useRoute } from 'vue-router';
 
 const url = 'http://localhost:8081/api/product';
 
+const route = useRoute();
 const products = ref([]);
 
 onMounted(async () => {
-  fetchProducts();
+  fetchProducts({ category: route.query.category });
+});
+
+watch(() => route.query.category, (newCategory) => {
+  fetchProducts({ category: newCategory });
 });
 
 async function fetchProducts(filters = {}) {

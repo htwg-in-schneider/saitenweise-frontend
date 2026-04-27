@@ -125,3 +125,10 @@ Made static product page from mock work as a Vue project:
 - Updated `ProductCatalog.vue` to handle search and filter events.
   - `fetchProducts` now accepts filter parameters and appends them to the API request (`/api/product?name=...&category=...`).
 - Also updated dependencies in `package.json`
+
+### Iteratation 10b: Category navigation in Navbar
+
+- Updated `Navbar.vue` to use `router-link` instead of static anchor tags for categories.
+- Links now include the `category` as a route query parameter (e.g. `/?category=VIOLIN`).
+- Adapted `ProductCatalog.vue` to read the `category` query parameter using `vue-router`'s `useRoute`.
+- Added a `watch` on `route.query.category` to re-fetch products automatically when the navigation changes the category.
