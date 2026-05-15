@@ -140,3 +140,14 @@ Made static product page from mock work as a Vue project:
 - Added `ProductReviews.vue` component to fetch and display reviews for a specific product.
   - Creation and deletion of reviews is currently not supported.
 - Updated `ProductDetail.vue` to include the `ProductReviews` component.
+
+### Iteration 12a: User Authentication with Auth0
+
+- Integrated Auth0 for user authentication.
+  - Settings in `.env.development` have to be adapted to your Auth0 application
+- Added `UserMenu` component to the Navbar:
+  - Handles Login/Logout.
+  - Displays user avatar when authenticated.
+  - Optimized for mobile view (avatar visible outside hamburger menu).
+- Added `/profile` page to display user information from Auth0 and OAuth2 debug info
+- Note: Profile page only takes information from Auth0. No backend call is made yet.
