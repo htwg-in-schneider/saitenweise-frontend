@@ -1,11 +1,15 @@
 <script setup>
 import { ref, onMounted, computed } from 'vue';
 import { useRouter } from 'vue-router';
+import { useAuth0 } from '@auth0/auth0-vue';
 import Button from '@/components/Button.vue';
+import NavButton from '@/components/NavButton.vue';
 
 const router = useRouter();
+const { getAccessTokenSilently } = useAuth0();
 const url = 'http://localhost:8081/api/product';
 const categoryUrl = 'http://localhost:8081/api/category';
+
 const product = ref({
   title: '',
   price: 0,
@@ -18,9 +22,13 @@ const translations = ref({});
 
 async function createProduct() {
   try {
+    const token = await getAccessTokenSilently();
     const response = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
       body: JSON.stringify(product.value),
     });
     if (!response.ok) {
@@ -90,6 +98,7 @@ async function fetchTranslations() {
         <label for="productDescription" class="form-label">Beschreibung</label>
         <textarea id="productDescription" class="form-control" v-model="product.description"></textarea>
       </div>
+      <NavButton variant="secondary" class="me-2" to="/">Zurück</NavButton>
       <Button type="submit" variant="accent">Erstellen</Button>
     </form>
   </div>

@@ -7,19 +7,48 @@ import ProductCard from '@/components/ProductCard.vue';
 import ProductFilter from '@/components/ProductFilter.vue';
 import { ref, onMounted, watch } from 'vue';
 import { useRoute } from 'vue-router';
+import { useAuth0 } from '@auth0/auth0-vue';
 
-const url = 'http://localhost:8081/api/product';
+const { isAuthenticated, getAccessTokenSilently } = useAuth0();
+const isAdmin = ref(false);
+
+const baseUrl = 'http://localhost:8081';
 
 const route = useRoute();
 const products = ref([]);
 
 onMounted(async () => {
   fetchProducts({ category: route.query.category });
+  checkAdminRole();
 });
 
 watch(() => route.query.category, (newCategory) => {
   fetchProducts({ category: newCategory });
+  checkAdminRole();
 });
+
+watch(isAuthenticated, (newValue) => {
+  checkAdminRole();
+});
+
+async function checkAdminRole() {
+  if (!isAuthenticated.value) {
+    return;
+  }
+
+  try {
+    const token = await getAccessTokenSilently();
+    const response = await fetch(`${baseUrl}/api/profile`, {
+      headers: { Authorization: `Bearer ${token}` }
+    });
+    if (response.ok) {
+      const data = await response.json();
+      isAdmin.value = data.role === 'ADMIN';
+    }
+  } catch (error) {
+    console.error('Error checking admin role:', error);
+  }
+}
 
 async function fetchProducts(filters = {}) {
   try {
@@ -31,7 +60,7 @@ async function fetchProducts(filters = {}) {
       params.append('category', filters.category);
     }
 
-    const response = await fetch(`${url}?${params.toString()}`);
+    const response = await fetch(`${baseUrl}/api/product?${params.toString()}`);
     if (!response.ok) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
@@ -62,7 +91,7 @@ async function fetchProducts(filters = {}) {
   <div class="container py-4">
     <div class="row g-4">
       <div v-for="product in products" :key="product.id" class="col-md-4">
-        <ProductCard :product="product" />
+        <ProductCard :product="product" :show-edit-button="isAdmin" />
       </div>
     </div>
   </div>
@@ -70,7 +99,7 @@ async function fetchProducts(filters = {}) {
   <div class="container py-4">
     <div class="row g-4 text-center">
       <div class="col-md-4"></div>
-      <div class="col-md-4">
+      <div class="col-md-4" v-if="isAdmin">
         <NavButton to="/product/create">Neues Produkt</NavButton>
       </div>
       <div class="col-md-4"></div>
