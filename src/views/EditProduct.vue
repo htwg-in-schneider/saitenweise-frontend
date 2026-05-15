@@ -1,12 +1,16 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useAuth0 } from '@auth0/auth0-vue';
 import Button from '@/components/Button.vue';
+import NavButton from '@/components/NavButton.vue';
 
 const route = useRoute();
 const router = useRouter();
+const { getAccessTokenSilently } = useAuth0();
 const url = 'http://localhost:8081/api/product';
 const categoryUrl = 'http://localhost:8081/api/category';
+
 const product = ref({});
 const categories = ref([]);
 const translations = ref({});
@@ -55,9 +59,13 @@ async function fetchProduct() {
 
 async function updateProduct() {
   try {
+    const token = await getAccessTokenSilently();
     const response = await fetch(`${url}/${product.value.id}`, {
       method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      },
       body: JSON.stringify(product.value),
     });
     if (!response.ok) {
@@ -74,8 +82,12 @@ async function updateProduct() {
 async function deleteProduct() {
   if (!confirm('Möchten Sie dieses Produkt wirklich löschen?')) return;
   try {
+    const token = await getAccessTokenSilently();
     const response = await fetch(`${url}/${product.value.id}`, {
       method: 'DELETE',
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
     });
     if (!response.ok) {
       throw new Error(`Fehler beim Löschen: ${response.status}`);
@@ -128,6 +140,7 @@ async function deleteProduct() {
         <label for="productDescription" class="form-label">Beschreibung</label>
         <textarea id="productDescription" class="form-control" v-model="product.description"></textarea>
       </div>
+      <NavButton variant="secondary" class="me-2" to="/">Zurück</NavButton>
       <Button type="submit" variant="accent">Aktualisieren</Button>
       <Button type="button" variant="danger" class="ms-2" @click="deleteProduct">Löschen</Button>
     </form>
