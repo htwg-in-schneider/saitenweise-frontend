@@ -30,6 +30,14 @@ npm run dev
 npm run build
 ```
 
+### Production Preview
+
+Serve content in dist folder:
+
+```sh
+npm run preview
+```
+
 ## Iterations
 
 ### Iteration 0: Getting started
@@ -165,3 +173,9 @@ Made static product page from mock work as a Vue project:
   - Checks if the user has the ADMIN role via `/api/profile`.
   - Only displays "Neues Produkt" and "Bearbeiten" buttons for admins.
 - Protected routes for creating and editing products using Auth0's `authGuard`.
+
+### Iteration 14: API base URL configuration via `.env` files
+
+- Introduced `.env.development` and `.env.production` files to manage environment-specific variable for the API base URL.
+- Updated API calls to use `import.meta.env.VITE_API_URL` instead of hardcoded URLs, see e.g. `ProductDetail.vue`
+- This allows easy switching between development (local) and production backends.

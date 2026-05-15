@@ -6,8 +6,9 @@ import ProductReviews from '@/components/ProductReviews.vue';
 import NavButton from '@/components/NavButton.vue';
 import Button from '@/components/Button.vue';
 import { ref, onMounted } from 'vue';
+
 import { useRoute } from 'vue-router';
-const url = 'http://localhost:8081/api/product';
+const url = `${import.meta.env.VITE_API_BASE_URL}/api/product`;
 const route = useRoute();
 const product = ref(null);
 onMounted(async () => fetchProduct());

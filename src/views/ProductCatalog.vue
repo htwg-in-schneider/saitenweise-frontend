@@ -12,7 +12,7 @@ import { useAuth0 } from '@auth0/auth0-vue';
 const { isAuthenticated, getAccessTokenSilently } = useAuth0();
 const isAdmin = ref(false);
 
-const baseUrl = 'http://localhost:8081';
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
 
 const route = useRoute();
 const products = ref([]);
