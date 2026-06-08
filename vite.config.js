@@ -4,7 +4,7 @@ import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueDevTools from 'vite-plugin-vue-devtools'
 
-const repoName = '/saitenweise-frontend/'; 
+const repoName = '/saitenweise-frontend/'; // CHECK for GitHub Pages deployment
 
 // https://vite.dev/config/
 export default defineConfig({
