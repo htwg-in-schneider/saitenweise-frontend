@@ -7,8 +7,8 @@ import NavButton from '@/components/NavButton.vue';
 
 const router = useRouter();
 const { getAccessTokenSilently } = useAuth0();
-const url = 'http://localhost:8081/api/product';
-const categoryUrl = 'http://localhost:8081/api/category';
+const url = `${import.meta.env.VITE_API_BASE_URL}/api/product`;
+const categoryUrl = `${import.meta.env.VITE_API_BASE_URL}/api/category`;
 
 const product = ref({
   title: '',

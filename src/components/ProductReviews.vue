@@ -9,7 +9,7 @@ const props = defineProps({
 });
 
 const reviews = ref([]);
-const reviewUrl = 'http://localhost:8081/api/review/product';
+const reviewUrl = `${import.meta.env.VITE_API_BASE_URL}/api/review/product`;
 
 async function fetchReviews() {
     try {
