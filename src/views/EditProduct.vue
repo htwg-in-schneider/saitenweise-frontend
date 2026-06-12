@@ -4,6 +4,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import Button from '@/components/Button.vue';
 import NavButton from '@/components/NavButton.vue';
+import AppAlert from '@/components/AppAlert.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -14,6 +15,13 @@ const categoryUrl = `${import.meta.env.VITE_API_BASE_URL}/api/category`;
 const product = ref({});
 const categories = ref([]);
 const translations = ref({});
+const notification = ref({ message: '', type: 'info' });
+const showDeleteModal = ref(false);
+
+function showNotification(message, type = 'info') {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  notification.value = { message, type };
+}
 
 onMounted(async () => {
   await Promise.all([fetchCategories(), fetchTranslations(), fetchProduct()]);
@@ -52,8 +60,8 @@ async function fetchProduct() {
     product.value.category = product.value.category ?? '';
   } catch (error) {
     console.error('Fehler beim Laden des Produkts:', error);
-    alert('Produkt konnte nicht geladen werden.');
-    router.push('/');
+    showNotification(`Produkt konnte nicht geladen werden: ${error.message}`, 'danger');
+    setTimeout(() => router.push('/'), 2500);
   }
 }
 
@@ -62,7 +70,7 @@ async function updateProduct() {
     const token = await getAccessTokenSilently();
     const response = await fetch(`${url}/${product.value.id}`, {
       method: 'PUT',
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
       },
@@ -71,16 +79,20 @@ async function updateProduct() {
     if (!response.ok) {
       throw new Error(`Fehler beim Aktualisieren: ${response.status}`);
     }
-    alert('Produkt erfolgreich aktualisiert!');
-    router.push('/');
+    showNotification('Produkt erfolgreich aktualisiert!', 'success');
+    setTimeout(() => router.push('/'), 1500);
   } catch (error) {
     console.error('Fehler beim Aktualisieren des Produkts:', error);
-    alert('Produkt konnte nicht aktualisiert werden.');
+    showNotification(`Produkt konnte nicht aktualisiert werden: ${error.message}`, 'danger');
   }
 }
 
-async function deleteProduct() {
-  if (!confirm('Möchten Sie dieses Produkt wirklich löschen?')) return;
+function deleteProduct() {
+  showDeleteModal.value = true;
+}
+
+async function confirmDelete() {
+  showDeleteModal.value = false;
   try {
     const token = await getAccessTokenSilently();
     const response = await fetch(`${url}/${product.value.id}`, {
@@ -92,11 +104,11 @@ async function deleteProduct() {
     if (!response.ok) {
       throw new Error(`Fehler beim Löschen: ${response.status}`);
     }
-    alert('Produkt erfolgreich gelöscht!');
-    router.push('/');
+    showNotification('Produkt erfolgreich gelöscht!', 'success');
+    setTimeout(() => router.push('/'), 1500);
   } catch (error) {
     console.error('Fehler beim Löschen des Produkts:', error);
-    alert('Produkt konnte nicht gelöscht werden.');
+    showNotification(`Produkt konnte nicht gelöscht werden: ${error.message}`, 'danger');
   }
 }
 </script>
@@ -104,6 +116,12 @@ async function deleteProduct() {
 <template>
   <div class="container py-5">
     <h2 class="fw-bold mb-4">Produkt bearbeiten</h2>
+
+    <AppAlert
+      :message="notification.message"
+      :type="notification.type"
+      @dismiss="notification.message = ''"
+    />
 
     <!-- Image Preview -->
     <div class="text-center mb-4">
@@ -144,6 +162,27 @@ async function deleteProduct() {
       <Button type="submit" variant="accent">Aktualisieren</Button>
       <Button type="button" variant="danger" class="ms-2" @click="deleteProduct">Löschen</Button>
     </form>
+
+    <!-- Delete Confirmation Modal -->
+    <div v-if="showDeleteModal" class="modal d-block" tabindex="-1" @click.self="showDeleteModal = false"
+      style="background: rgba(0,0,0,0.5);">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Produkt löschen</h5>
+            <button type="button" class="btn-close" @click="showDeleteModal = false"></button>
+          </div>
+          <div class="modal-body">
+            Möchten Sie das Produkt <strong>{{ product.title }}</strong> wirklich löschen?
+            Diese Aktion kann nicht rückgängig gemacht werden.
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" @click="showDeleteModal = false">Abbrechen</button>
+            <button type="button" class="btn btn-danger" @click="confirmDelete">Löschen</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 

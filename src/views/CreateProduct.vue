@@ -1,9 +1,10 @@
 <script setup>
-import { ref, onMounted, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuth0 } from '@auth0/auth0-vue';
 import Button from '@/components/Button.vue';
 import NavButton from '@/components/NavButton.vue';
+import AppAlert from '@/components/AppAlert.vue';
 
 const router = useRouter();
 const { getAccessTokenSilently } = useAuth0();
@@ -19,13 +20,19 @@ const product = ref({
 });
 const categories = ref([]);
 const translations = ref({});
+const notification = ref({ message: '', type: 'info' });
+
+function showNotification(message, type = 'info') {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  notification.value = { message, type };
+}
 
 async function createProduct() {
   try {
     const token = await getAccessTokenSilently();
     const response = await fetch(url, {
       method: 'POST',
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`
       },
@@ -34,11 +41,11 @@ async function createProduct() {
     if (!response.ok) {
       throw new Error(`Fehler beim Erstellen: ${response.status}`);
     }
-    alert('Produkt erfolgreich erstellt!');
-    router.push('/');
+    showNotification('Produkt erfolgreich erstellt!', 'success');
+    setTimeout(() => router.push('/'), 1500);
   } catch (error) {
     console.error('Fehler beim Erstellen des Produkts:', error);
-    alert('Produkt konnte nicht erstellt werden.');
+    showNotification(`Produkt konnte nicht erstellt werden: ${error.message}`, 'danger');
   }
 }
 
@@ -72,6 +79,13 @@ async function fetchTranslations() {
 <template>
   <div class="container py-5">
     <h2 class="fw-bold mb-4">Neues Produkt erstellen</h2>
+
+    <AppAlert
+      :message="notification.message"
+      :type="notification.type"
+      @dismiss="notification.message = ''"
+    />
+
     <form @submit.prevent="createProduct">
       <div class="mb-3">
         <label for="productName" class="form-label">Name</label>
