@@ -181,3 +181,11 @@ Made static product page from mock work as a Vue project:
   - Created a dedicated `CheckoutView` to review items and enter shipping details.
   - Implemented order submission logic, sending the cart payload to the backend.
   - **Very basic implementation**, no payment, no form validation, no confirmation page.
+
+### Iteration 16: Using real Bootstrap alerts and modal
+
+- Replaced all browser-native `alert()` calls with a reusable `AppAlert.vue` component.
+  - supports alert styles, auto-dismiss and fade-in/out
+  - Error messages now include the HTTP status code or exception message for better debugging.
+- On success actions that redirect (create, update, delete product), the page scrolls to the top first so the alert is visible before the redirect occurs after 1.5 s.
+- Replaced the browser-native `confirm()` dialog in `EditProduct` with a Bootstrap modal.

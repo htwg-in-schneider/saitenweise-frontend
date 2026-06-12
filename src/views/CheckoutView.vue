@@ -1,11 +1,12 @@
 <script setup>
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { useAuth0 } from '@auth0/auth0-vue';
 import { useCartStore } from '@/stores/cart';
 import Navbar from '@/components/Navbar.vue';
 import Footer from '@/components/Footer.vue';
 import Button from '@/components/Button.vue';
 import NavButton from '@/components/NavButton.vue';
+import AppAlert from '@/components/AppAlert.vue';
 
 const cartStore = useCartStore();
 const { isAuthenticated, getAccessTokenSilently } = useAuth0();
@@ -17,9 +18,16 @@ const form = reactive({
     country: 'Germany'
 });
 
+const notification = ref({ message: '', type: 'info' });
+
+function showNotification(message, type = 'info') {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    notification.value = { message, type };
+}
+
 async function submitOrder() {
     if (cartStore.items.length === 0) {
-        alert('Ihr Warenkorb ist leer.');
+        showNotification('Ihr Warenkorb ist leer.', 'warning');
         return;
     }
 
@@ -48,21 +56,19 @@ async function submitOrder() {
         });
 
         if (response.ok) {
-            // Ideally we might get a string back based on user prompt, but we handle whatever
             const text = await response.text();
             console.log('Order submitted successfully:', text);
-            alert(text);
+            showNotification(text || 'Bestellung erfolgreich aufgegeben!', 'success');
             cartStore.clearCart();
-            // Reset form
             Object.assign(form, { street: '', city: '', zipCode: '', country: 'Germany' });
         } else {
             console.error('Order submission failed', response.status);
-            alert('Fehler beim Absenden der Bestellung.');
+            showNotification(`Fehler beim Absenden der Bestellung. (Status ${response.status})`, 'danger');
         }
 
     } catch (error) {
         console.error('Error submitting order:', error);
-        alert('Ein Fehler ist aufgetreten.');
+        showNotification(`Ein Fehler ist aufgetreten: ${error.message}`, 'danger');
     }
 }
 
@@ -82,6 +88,13 @@ function updateQuantity(id, event) {
     <Navbar />
     <section class="container py-5">
         <h2 class="fw-bold mb-4">Checkout</h2>
+
+        <AppAlert
+            :message="notification.message"
+            :type="notification.type"
+            @dismiss="notification.message = ''"
+        />
+
         <div class="row">
             <!-- Cart Summary -->
             <div class="col-md-6 mb-4">
