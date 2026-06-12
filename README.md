@@ -185,7 +185,15 @@ Made static product page from mock work as a Vue project:
 ### Iteration 16: Using real Bootstrap alerts and modal
 
 - Replaced all browser-native `alert()` calls with a reusable `AppAlert.vue` component.
-  - supports alert styles, auto-dismiss and fade-in/out
+  - Supports alert styles, auto-dismiss and fade-in/out animation.
   - Error messages now include the HTTP status code or exception message for better debugging.
 - On success actions that redirect (create, update, delete product), the page scrolls to the top first so the alert is visible before the redirect occurs after 1.5 s.
 - Replaced the browser-native `confirm()` dialog in `EditProduct` with a Bootstrap modal.
+
+### Iteration 17: Input validation in CheckoutView
+
+- Added client-side input validation to `CheckoutView` form:
+  - All fields (street, ZIP code, city, country) are required.
+  - ZIP code must be numeric and between 0 and 99999.
+  - Errors are shown inline below each field using Bootstrap's `is-invalid` / `invalid-feedback` classes.
+  - Each field clears its error as soon as the user starts typing.
