@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, ref } from 'vue';
+import { ref } from 'vue';
 import { useAuth0 } from '@auth0/auth0-vue';
 import { useCartStore } from '@/stores/cart';
 import Navbar from '@/components/Navbar.vue';
@@ -11,12 +11,16 @@ import AppAlert from '@/components/AppAlert.vue';
 const cartStore = useCartStore();
 const { isAuthenticated, getAccessTokenSilently } = useAuth0();
 
-const form = reactive({
+// Tipp: Bei form und errors könnte man anstatt von ref auch reactive() 
+// verwenden und würde sich damit in validate() die vielen .value-Zugriffe
+// sparen.
+const form = ref({
     street: '',
     city: '',
     zipCode: '',
     country: 'Germany'
 });
+const errors = ref({ street: '', zipCode: '', city: '', country: '' });
 
 const notification = ref({ message: '', type: 'info' });
 
@@ -25,18 +29,39 @@ function showNotification(message, type = 'info') {
     notification.value = { message, type };
 }
 
+function validate() {
+    errors.value.street = form.value.street.trim() ? '' : 'Bitte Straße und Hausnummer angeben.';
+    errors.value.city = form.value.city.trim() ? '' : 'Bitte Stadt angeben.';
+    errors.value.country = form.value.country.trim() ? '' : 'Bitte Land angeben.';
+
+    const zip = form.value.zipCode.trim();
+    if (!zip) {
+        errors.value.zipCode = 'Bitte PLZ angeben.';
+    } else if (!/^\d+$/.test(zip)) {
+        errors.value.zipCode = 'PLZ darf nur Ziffern enthalten.';
+    } else if (parseInt(zip) < 0 || parseInt(zip) > 99999) {
+        errors.value.zipCode = 'PLZ muss zwischen 0 und 99999 liegen.';
+    } else {
+        errors.value.zipCode = '';
+    }
+
+    return !errors.value.street && !errors.value.zipCode && !errors.value.city && !errors.value.country;
+}
+
 async function submitOrder() {
     if (cartStore.items.length === 0) {
         showNotification('Ihr Warenkorb ist leer.', 'warning');
         return;
     }
 
+    if (!validate()) return;
+
     const orderData = {
         items: cartStore.items.map(item => ({
             productId: item.id,
             quantity: item.quantity
         })),
-        address: { ...form }
+        address: { ...form.value }
     };
 
     try {
@@ -60,7 +85,8 @@ async function submitOrder() {
             console.log('Order submitted successfully:', text);
             showNotification(text || 'Bestellung erfolgreich aufgegeben!', 'success');
             cartStore.clearCart();
-            Object.assign(form, { street: '', city: '', zipCode: '', country: 'Germany' });
+            Object.assign(form.value, { street: '', city: '', zipCode: '', country: 'Germany' });
+            Object.assign(errors.value, { street: '', zipCode: '', city: '', country: '' });
         } else {
             console.error('Order submission failed', response.status);
             showNotification(`Fehler beim Absenden der Bestellung. (Status ${response.status})`, 'danger');
@@ -149,22 +175,29 @@ function updateQuantity(id, event) {
                         <form @submit.prevent="submitOrder">
                             <div class="mb-3">
                                 <label for="street" class="form-label">Straße und Hausnummer</label>
-                                <input type="text" class="form-control" id="street" v-model="form.street" required>
+                                <input type="text" class="form-control" :class="{ 'is-invalid': errors.street }"
+                                    id="street" v-model="form.street" @input="errors.street = ''">
+                                <div class="invalid-feedback">{{ errors.street }}</div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-md-4">
                                     <label for="zipCode" class="form-label">PLZ</label>
-                                    <input type="text" class="form-control" id="zipCode" v-model="form.zipCode"
-                                        required>
+                                    <input type="text" class="form-control" :class="{ 'is-invalid': errors.zipCode }"
+                                        id="zipCode" v-model="form.zipCode" @input="errors.zipCode = ''">
+                                    <div class="invalid-feedback">{{ errors.zipCode }}</div>
                                 </div>
                                 <div class="col-md-8">
                                     <label for="city" class="form-label">Stadt</label>
-                                    <input type="text" class="form-control" id="city" v-model="form.city" required>
+                                    <input type="text" class="form-control" :class="{ 'is-invalid': errors.city }"
+                                        id="city" v-model="form.city" @input="errors.city = ''">
+                                    <div class="invalid-feedback">{{ errors.city }}</div>
                                 </div>
                             </div>
                             <div class="mb-4">
                                 <label for="country" class="form-label">Land</label>
-                                <input type="text" class="form-control" id="country" v-model="form.country" required>
+                                <input type="text" class="form-control" :class="{ 'is-invalid': errors.country }"
+                                    id="country" v-model="form.country" @input="errors.country = ''">
+                                <div class="invalid-feedback">{{ errors.country }}</div>
                             </div>
 
                             <div class="d-grid">
